@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Google Product Feed Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to ali.nawaz@cooperativecomputing.com so we can send you a copy immediately.
+ *
+ * @category    Cooperative Computing
+ * @package     CooperativeComputing_GoogleProductFeed
+ * @author      Ali Nawaz <ali.nawaz@cooperativecomputing.com>
+ * @copyright   Copyright 2015 Cooperative Computing (http://www.cooperativecomputing.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <tabs>
+        <cooperativecomputing translate="label" module="googleproductfeed">
+            <label>Cooperative Computing</label>
+            <sort_order>1</sort_order>
+        </cooperativecomputing>
+    </tabs>
+   <sections>
+        <googleproductfeed_options translate="label">
+            <label>Google Product Feed</label>
+            <tab>cooperativecomputing</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label">
+                    <label>Feed Options</label>
+                    <frontend_type>text</frontend_type>
+                    <expanded>1</expanded>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Name of your Organization e.g. ABC, Inc.</comment>
+                        </title>
+                        <link translate="label">
+                            <label>Website URL</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Company Website URL e.g. http://www.example.com/</comment>
+                        </link>
+                        <description translate="label">
+                            <label>Description</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Description of your Organization e.g. Raw Plastic Supplier</comment>
+                        </description>
+                        <published_date translate="label">
+                            <label>Published Date</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Enter the date and time for Google to publish your feed e.g. Thu, 26 Nov 2015 16:30:00 GMT</comment>
+                        </published_date>
+                        <google_product_category translate="label">
+                            <label>Google Product Category</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>CooperativeComputing_GoogleProductFeed_Model_GoogleProductCategory</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[
+                                Select Google Product Category from list.<br>
+                                Source: <a href="https://support.google.com/merchants/answer/1705911" target="_blank">Google product taxanomy</a><br><br>
+                                <script>
+                                    var baseUrl = '';
+                                    var url = window.location.href;
+                                    var url_parts = url.split('index.php');
+                                    if (url_parts[0] != url) {
+                                        baseUrl = url_parts[0];
+                                    } else {
+                                        baseUrl = window.location.origin + '/';
+                                    }
+
+                                    function generateGoogleProductFeed() {
+                                        document.getElementById('google_product_feed_result').innerHTML = '';
+                                        var title = document.getElementById('googleproductfeed_options_general_title');
+                                        var link = document.getElementById('googleproductfeed_options_general_link');
+                                        var description = document.getElementById('googleproductfeed_options_general_description');
+                                        var published_date = document.getElementById('googleproductfeed_options_general_published_date');
+                                        var google_product_category = document.getElementById('googleproductfeed_options_general_google_product_category');
+                                        var data = "title=" + title.value + "&link=" + link.value + "&description=" + description.value + "&published_date=" + published_date.value + "&google_product_category=" + google_product_category.value;
+
+                                        var oOptions = {
+                                            method: "post",
+                                            // postBody: data,
+                                            parameters: data,
+                                            onSuccess: function (oXHR, oJson) {
+                                                //alert("Response received successfully.");
+                                                var response = oXHR.responseText;
+                                                if (response == 'success') {
+                                                    var result = 'Google Product Feed file has been generated.<br><a href="' + baseUrl + 'google-product-feed.xml" target="_blank">View</a>';
+                                                } else {
+                                                    var result = '<span style="font-weight:bold; color:red;">Some error occurred!</span>';
+                                                }
+                                                document.getElementById('google_product_feed_result').innerHTML = result;
+                                            },
+                                            onFailure: function (oXHR, oJson) {
+                                                //alert("Request was unsuccessful.");
+                                                var result = '<span style="font-weight:bold; color:red;">Some error occurred!</span>';
+                                                document.getElementById('google_product_feed_result').innerHTML = result;
+                                            }
+                                        };
+                                        var oRequest = new Ajax.Request(baseUrl+"google_product_feed.php", oOptions);
+                                    }
+                                </script>
+                                <button style="" onclick="generateGoogleProductFeed();" class="scalable save" type="button" title="Generate Feed">
+                                    <span>Generate Feed</span>
+                                </button><br><br>
+                                <div id="google_product_feed_result" style="font-weight:bold;"></div>
+                            ]]></comment>
+                        </google_product_category>
+                    </fields>
+                </general>
+            </groups>
+        </googleproductfeed_options>
+    </sections>
+</config>

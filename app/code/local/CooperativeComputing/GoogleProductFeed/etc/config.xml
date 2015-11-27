@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Google Product Feed Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to ali.nawaz@cooperativecomputing.com so we can send you a copy immediately.
+ *
+ * @category    Cooperative Computing
+ * @package     CooperativeComputing_GoogleProductFeed
+ * @author      Ali Nawaz <ali.nawaz@cooperativecomputing.com>
+ * @copyright   Copyright 2015 Cooperative Computing (http://www.cooperativecomputing.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <CooperativeComputing_GoogleProductFeed>
+            <version>1.0.0</version>
+        </CooperativeComputing_GoogleProductFeed>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <CooperativeComputing_GoogleProductFeed before="Mage_Adminhtml">CooperativeComputing_GoogleProductFeed_Adminhtml</CooperativeComputing_GoogleProductFeed>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <global>
+        <helpers>
+            <googleproductfeed>
+                <class>CooperativeComputing_GoogleProductFeed_Helper</class>
+            </googleproductfeed>
+        </helpers>
+    </global>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <googleproductfeed_options>
+                                            <title>Google Product Feed</title>
+                                        </googleproductfeed_options>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <googleproductfeed_options>
+            <general>
+                <title>ABC, Inc.</title>
+                <link>http://www.example.com/</link>
+                <description>Raw Plastic Supplier</description>
+            </general>
+        </googleproductfeed_options>
+    </default>
+</config>
